@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,6 +52,28 @@ public class SpittleController {
 		 * pairs) that will be handed off to the view so that the data can be
 		 * rendered to the client
 		 */
+	}
+
+	/*
+	 * This handler method uses placeholders to accept a Spittle ID as part of
+	 * the path.
+	 * 
+	 * Although all the other parts of the path need to match exactly for the
+	 * request to be handled, the placeholder can carry any value.
+	 */
+	@RequestMapping(value = "/{spittleId}", method = RequestMethod.GET)
+	public String spittle(@PathVariable("spittleId") long spittleId, Model model) {
+		/*
+		 * @PathVariable("spittleId"). This indicates that whatever value is at
+		 * the placeholder position in the request path will be passed into the
+		 * handler method¡¯s spittleId parameter.
+		 */
+		model.addAttribute(spittleRepository.findOne(spittleId));
+		/*
+		 * will add that Spittle to the model. The model key will be spittle,
+		 * inferred by the type passed in to addAttribute().
+		 */
+		return "spittle";
 	}
 
 }

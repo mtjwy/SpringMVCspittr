@@ -13,20 +13,20 @@ public class Spittle {
 	private Double longitude;
 
 	public Spittle(String message, Date time) {
-		this(message, time, null, null);
+		this(null, message, time, null, null);
 	}
 
-	public Spittle(String message, Date time, Double latitude, Double longitude) {
-		super();
-		this.id = null;
+	public Spittle(Long id, String message, Date time, Double longitude, Double latitude) {
+		this.id = id;
 		this.message = message;
 		this.time = time;
-		this.latitude = latitude;
 		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 
 	/*
-	 * using Apache Commons Lang for easy implementation of the equals()and hashCode() methods.
+	 * using Apache Commons Lang for easy implementation of the equals()and
+	 * hashCode() methods.
 	 */
 	@Override
 	public boolean equals(Object that) {
