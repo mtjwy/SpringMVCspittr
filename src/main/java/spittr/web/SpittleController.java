@@ -21,10 +21,10 @@ public class SpittleController {
 
 	private SpittleRepository spittleRepository;
 
-	@Autowired
-	public SpittleController(SpittleRepository spittleRepository) {
-		this.spittleRepository = spittleRepository;
-	}
+	 @Autowired
+	 public SpittleController(SpittleRepository spittleRepository) {
+	 this.spittleRepository = spittleRepository;
+	 }
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
