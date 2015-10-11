@@ -30,7 +30,24 @@ public class SpitterController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String processRegistration(@Valid Spitter spitter, Errors errors) {
+	public String processRegistration(@Valid Spitter spitter, // @Validto
+																// indicates to
+																// Spring that
+																// the command
+																// object has
+																// validation
+																// constraints
+																// that should
+																// be enforced.
+			Errors errors) {
+		/*
+		 * If there are any validation errors, they¡¯re available in the Errors
+		 * objec.
+		 * 
+		 * Note that it¡¯s important that the Errors parameter immediately follow
+		 * the @Valid-annotated parameter that¡¯s being validated.
+		 */
+
 		if (errors.hasErrors()) {
 			return "registerForm";
 		}
