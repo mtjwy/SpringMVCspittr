@@ -13,6 +13,12 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.3.4.RC0</version>
+				<configuration>
+					<httpConnector>
+						<!--host>localhost</host -->
+						<port>9999</port>
+					</httpConnector>
+				</configuration>
 			</plugin>
 
 
@@ -46,6 +52,7 @@
 		<org.springframework.version>4.2.1.RELEASE</org.springframework.version>
 		<apache.tiles>3.0.5</apache.tiles>
 		<spring.security.version>4.0.2.RELEASE</spring.security.version>
+		<jetty.http.port>9999</jetty.http.port>
 	</properties>
 
 	<dependencies>
@@ -161,6 +168,8 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
 
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
