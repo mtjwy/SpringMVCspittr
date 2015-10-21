@@ -2,15 +2,31 @@ package spittr;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+@Entity
 public class Spittle {
+	@Id
+	@GeneratedValue
 	private final Long id;
+
+	@Size(min = 1, message = "Name must be at least 1 character!")
 	private final String message;
 	private final Date time;
 	private Double latitude;
 	private Double longitude;
+
+	@ManyToOne
+	@JoinColumn(name = "spitter_id") // set foreign key
+	private Spitter spitter;
 
 	public Spittle(String message, Date time) {
 		this(null, message, time, null, null);
@@ -64,6 +80,14 @@ public class Spittle {
 
 	public Date getTime() {
 		return time;
+	}
+
+	public Spitter getSpitter() {
+		return spitter;
+	}
+
+	public void setSpitter(Spitter spitter) {
+		this.spitter = spitter;
 	}
 
 }

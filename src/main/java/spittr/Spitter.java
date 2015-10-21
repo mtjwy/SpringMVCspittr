@@ -1,5 +1,12 @@
 package spittr;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -7,101 +14,117 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Email;
 
+@Entity
 public class Spitter {
 
-  private Long id;
-  
-  @NotNull
-  @Size(min=5, max=16)
-  private String username;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-  @NotNull
-  @Size(min=5, max=25)
-  private String password;
-  
-  @NotNull
-  @Size(min=2, max=30)
-  private String firstName;
+	@NotNull
+	@Size(min = 5, max = 16)
+	private String username;
 
-  @NotNull
-  @Size(min=2, max=30)
-  private String lastName;
-  
-  @NotNull
-  @Email
-  private String email;
+	@NotNull
+	@Size(min = 5, max = 25)
+	private String password;
 
-  public Spitter() {}
-  
-  public Spitter(String username, String password, String firstName, String lastName, String email) {
-    this(null, username, password, firstName, lastName, email);
-  }
+	@NotNull
+	@Size(min = 2, max = 30)
+	private String firstName;
 
-  public Spitter(Long id, String username, String password, String firstName, String lastName, String email) {
-    this.id = id;
-    this.username = username;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-  }
+	@NotNull
+	@Size(min = 2, max = 30)
+	private String lastName;
 
-  public String getUsername() {
-    return username;
-  }
+	@NotNull
+	@Size(min = 1, message = "Invalid email address!")
+	@Email(message = "Invalid email address!")
+	private String email;
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+	@OneToMany(mappedBy = "spitter", cascade = CascadeType.REMOVE)
+	private List<Spittle> spittles;
 
-  public String getPassword() {
-    return password;
-  }
+	public Spitter() {
+	}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+	public Spitter(String username, String password, String firstName, String lastName, String email) {
+		this(null, username, password, firstName, lastName, email);
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Spitter(Long id, String username, String password, String firstName, String lastName, String email) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public List<Spittle> getSpittles() {
+		return spittles;
+	}
 
-  public String getFirstName() {
-    return firstName;
-  }
+	public void setSpittles(List<Spittle> spittles) {
+		this.spittles = spittles;
+	}
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+	public String getUsername() {
+		return username;
+	}
 
-  public String getLastName() {
-    return lastName;
-  }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-  
-  public String getEmail() {
-    return email;
-  }
-  
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	public String getPassword() {
+		return password;
+	}
 
-  @Override
-  public boolean equals(Object that) {
-    return EqualsBuilder.reflectionEquals(this, that, "firstName", "lastName", "username", "password", "email");
-  }
-  
-  @Override
-  public int hashCode() {
-    return HashCodeBuilder.reflectionHashCode(this, "firstName", "lastName", "username", "password", "email");
-  }
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Override
+	public boolean equals(Object that) {
+		return EqualsBuilder.reflectionEquals(this, that, "firstName", "lastName", "username", "password", "email");
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this, "firstName", "lastName", "username", "password", "email");
+	}
 
 }

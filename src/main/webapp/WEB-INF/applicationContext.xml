@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<jdbc:embedded-database type="HSQL" id="dataSource" />
+
+<!-- specify to use Hypersonic database for dev mode-->
+<!-- the id of this bean is dataSource -->
+<jdbc:embedded-database type="HSQL" id="dataSource" />
+
+
+<!-- bean for JPA. this factory bean will responsible for create EntityManager to do CRUD operation on database -->
+	<bean
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		id="emf">
+		<property name="packagesToScan" value="spittr" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+<!-- 				this will create the whole database based on entities -->
+			</props>
+		</property>
+
+		
+		<property name="persistenceProvider">
+			<bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
+		</property>
+	</bean>
+</beans>
