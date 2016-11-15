@@ -25,6 +25,12 @@ public class SpittleController {
 	 public SpittleController(SpittleRepository spittleRepository) {
 	 this.spittleRepository = spittleRepository;
 	 }
+	 
+	@RequestMapping(value="/recent", method = RequestMethod.GET)
+	public String spittles(Model model) {
+		model.addAttribute("spittleList", spittleRepository.findSpittles(Long.MAX_VALUE, 20));
+		return "spittles";
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
@@ -35,7 +41,7 @@ public class SpittleController {
 		 * the value returned is put into the model, and the model key is
 		 * inferred from its type (spittleList in this case)
 		 * 
-		 * As for the logical view name, it¡¯s inferred from the request path.
+		 * As for the logical view name, itï¿½ï¿½s inferred from the request path.
 		 * Because this method handles GET requests for /spittles, the view name
 		 * is spittles (chopping off the leading slash).
 		 */
@@ -43,7 +49,7 @@ public class SpittleController {
 		/*
 		 * the result is: A list of Spittle objects is stored in the model with
 		 * a key of spittleList and given to the view whose name is spittles.
-		 * Given the way you¡¯ve configured InternalResourceViewResolver, that
+		 * Given the way youï¿½ï¿½ve configured InternalResourceViewResolver, that
 		 * view is a JSP at /WEB-INF/views/spittles.jsp.
 		 */
 
@@ -66,7 +72,7 @@ public class SpittleController {
 		/*
 		 * @PathVariable("spittleId"). This indicates that whatever value is at
 		 * the placeholder position in the request path will be passed into the
-		 * handler method¡¯s spittleId parameter.
+		 * handler methodï¿½ï¿½s spittleId parameter.
 		 */
 		model.addAttribute(spittleRepository.findOne(spittleId));
 		/*

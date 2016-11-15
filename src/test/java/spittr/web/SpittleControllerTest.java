@@ -20,6 +20,19 @@ import spittr.Spittle;
 import spittr.data.SpittleRepository;
 
 public class SpittleControllerTest {
+	
+	@Test
+	public void shouldShowRecentSpittles() throws Exception {
+		List<Spittle> expectedSpittles = createSpittleList(20);
+		SpittleRepository mockRepository = mock(SpittleRepository.class);
+		when(mockRepository.findSpittles(Long.MAX_VALUE, 20)).thenReturn(expectedSpittles);
+		SpittleController controller = new SpittleController(mockRepository);
+		MockMvc mockMvc = standaloneSetup(controller)
+				.setSingleView(new InternalResourceView("/WEB-INF/views/spittles.jsp")).build();
+		mockMvc.perform(get("/spittles/recent")).andExpect(view().name("spittles"))
+				.andExpect(model().attributeExists("spittleList"))
+				.andExpect(model().attribute("spittleList", hasItems(expectedSpittles.toArray())));
+	}
 
 	@Test
 	public void shouldShowPagedSpittles() throws Exception {
@@ -42,17 +55,17 @@ public class SpittleControllerTest {
 				/*
 				 * Notice that unlike HomeControllerTest, this test calls
 				 * setSingleView() on the MockMvcbuilder. This is so the mock
-				 * framework won¡¯t try to resolve the view name coming from the
+				 * framework wonï¿½ï¿½t try to resolve the view name coming from the
 				 * controller on its own. In many cases, this is unnecessary.
 				 * 
 				 * But for this controller method, the view name will be similar
-				 * to the request¡¯s path;
+				 * to the requestï¿½ï¿½s path;
 				 * 
 				 * left to its default view resolution, MockMvcwill fail because
-				 * the view path will be confused with the controller¡¯s path.
+				 * the view path will be confused with the controllerï¿½ï¿½s path.
 				 * The actual path given when constructing the
 				 * InternalResourceViewis unimportant in this test, but you set
-				 * it to be consistent with how you¡¯ve configured
+				 * it to be consistent with how youï¿½ï¿½ve configured
 				 * InternalResourceViewResolver.
 				 */
 
